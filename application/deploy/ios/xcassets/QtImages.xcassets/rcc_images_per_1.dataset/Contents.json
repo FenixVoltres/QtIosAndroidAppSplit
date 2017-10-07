@@ -1,0 +1,15 @@
+{
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  },
+  "data" : [
+    {
+      "idiom" : "iphone"
+    },
+    {
+      "idiom" : "ipad",
+      "filename" : "images_per_1_tablet10.rcc"
+    }
+  ]
+}

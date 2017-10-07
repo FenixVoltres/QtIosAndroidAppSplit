@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <compatible-screens>
+        <!-- phone x1 -->
+        <!--<screen android:screenSize="normal" android:screenDensity="ldpi" />      &lt;!&ndash; 120 &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="mdpi" />      &lt;!&ndash; 160 &ndash;&gt;-->
+
+        <!-- phone x2 -->
+        <!--<screen android:screenSize="normal" android:screenDensity="213" />       &lt;!&ndash; 213: TVDPI &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="hdpi" />      &lt;!&ndash; 240 &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="280" />       &lt;!&ndash; 280: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="xhdpi" />     &lt;!&ndash; 320 &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="360" />       &lt;!&ndash; 360: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="400" />       &lt;!&ndash; 400: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="420" />       &lt;!&ndash; 420: Google Pixel, Nexus 5x &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="xxhdpi" />    &lt;!&ndash; 480 &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="560" />       &lt;!&ndash; 560: Google Pixel XL, Nexus 6, Nexus 6P &ndash;&gt;-->
+        <!--<screen android:screenSize="normal" android:screenDensity="xxxhdpi" />   &lt;!&ndash; 640 &ndash;&gt;-->
+
+        <!-- tablet7 x1 -->
+        <!--<screen android:screenSize="large" android:screenDensity="ldpi" />      &lt;!&ndash; 120 &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="mdpi" />      &lt;!&ndash; 160 &ndash;&gt;-->
+
+        <!-- tablet7 x2 -->
+        <!--<screen android:screenSize="large" android:screenDensity="213" />       &lt;!&ndash; 213: TVDPI &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="hdpi" />      &lt;!&ndash; 240 &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="280" />       &lt;!&ndash; 280: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="xhdpi" />     &lt;!&ndash; 320 &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="360" />       &lt;!&ndash; 360: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="400" />       &lt;!&ndash; 400: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="420" />       &lt;!&ndash; 420: Google Pixel, Nexus 5x &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="xxhdpi" />    &lt;!&ndash; 480 &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="560" />       &lt;!&ndash; 560: Google Pixel XL, Nexus 6, Nexus 6P &ndash;&gt;-->
+        <!--<screen android:screenSize="large" android:screenDensity="xxxhdpi" />   &lt;!&ndash; 640 &ndash;&gt;-->
+
+        <!-- tablet10 x1 -->
+        <screen android:screenSize="xlarge" android:screenDensity="ldpi" />      <!-- 120 -->
+        <screen android:screenSize="xlarge" android:screenDensity="mdpi" />      <!-- 160 -->
+
+        <!-- tablet10 x2 -->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="213" />       &lt;!&ndash; 213: TVDPI &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="hdpi" />      &lt;!&ndash; 240 &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="280" />       &lt;!&ndash; 280: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="xhdpi" />     &lt;!&ndash; 320 &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="360" />       &lt;!&ndash; 360: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="400" />       &lt;!&ndash; 400: FB uses it &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="420" />       &lt;!&ndash; 420: Google Pixel, Nexus 5x &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="xxhdpi" />    &lt;!&ndash; 480 &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="560" />       &lt;!&ndash; 560: Google Pixel XL, Nexus 6, Nexus 6P &ndash;&gt;-->
+        <!--<screen android:screenSize="xlarge" android:screenDensity="xxxhdpi" />   &lt;!&ndash; 640 &ndash;&gt;-->
+    </compatible-screens>
+</manifest>

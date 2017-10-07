@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images/anySize">
+        <file>qt_logo_any@2x.png</file>
+    </qresource>
+</RCC>

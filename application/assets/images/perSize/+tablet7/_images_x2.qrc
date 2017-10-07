@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images/perSize">
+        <file>background@2x.png</file>
+    </qresource>
+</RCC>

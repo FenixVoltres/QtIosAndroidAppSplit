@@ -37,3 +37,13 @@ Makefile*
 # QtCtreator CMake
 CMakeLists.txt.user*
 
+# Custom
+
+/application/deploy/android/.build
+/application/deploy/android/.idea
+/application/deploy/android/.gradle
+*.rcc
+*~
+local.properties
+gradle.properties
+*.iml

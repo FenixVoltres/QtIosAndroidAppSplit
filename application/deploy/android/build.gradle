@@ -1,0 +1,198 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url "https://maven.google.com" }
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+// Version code bases
+// See https://developer.android.com/google/play/publishing/multiple-apks.html#VersionCodes
+ext.screenSizeVersionCodes = [all:0, normal:1, large:2, xlarge:3]
+ext.densityVersionCodes = [all:0, low:1, high:2]
+ext.abiVersionCodes = ['armeabi-v7a':1, x86:2] // Support for both architectures is beyond scope of this example
+
+android {
+    /*******************************************************
+     * The following variables:
+     * - androidBuildToolsVersion,
+     * - androidCompileSdkVersion
+     * - qt5AndroidDir - holds the path to qt android files
+     *                   needed to build any Qt application
+     *                   on Android.
+     *
+     * are defined in gradle.properties file. This file is
+     * updated by QtCreator and androiddeployqt tools.
+     * Changing them manually might break the compilation!
+     *******************************************************/
+
+    compileSdkVersion androidCompileSdkVersion.toInteger()
+    buildToolsVersion androidBuildToolsVersion
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java', 'source/main/java']
+            res.srcDirs = [qt5AndroidDir + '/res', 'res', 'source/main/res']
+            aidl.srcDirs = [qt5AndroidDir + '/src', 'src', 'aidl']
+            assets.srcDirs = ['assets', 'source/main/assets']
+            renderscript.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        // Each app variant has it's own manifest
+        // modification and resource source folder
+
+        normalLowDpi {
+            manifest.srcFile 'source/normalLowDpi/AndroidManifest.xml'
+            res.srcDirs "source/normalLowDpi/res", "source/lowDpi/res"
+        }
+        normalHighDpi {
+            manifest.srcFile 'source/normalHighDpi/AndroidManifest.xml'
+            res.srcDirs "source/normalHighDpi/res", "source/highDpi/res"
+        }
+        largeLowDpi {
+            manifest.srcFile 'source/largeLowDpi/AndroidManifest.xml'
+            res.srcDirs "source/largeLowDpi/res", "source/lowDpi/res"
+        }
+        largeHighDpi {
+            manifest.srcFile 'source/largeHighDpi/AndroidManifest.xml'
+            res.srcDirs "source/largeHighDpi/res", "source/highDpi/res"
+        }
+        xlargeLowDpi {
+            manifest.srcFile 'source/xlargeLowDpi/AndroidManifest.xml'
+            res.srcDirs "source/xlargeLowDpi/res", "source/lowDpi/res"
+        }
+        xlargeHighDpi {
+            manifest.srcFile 'source/xlargeHighDpi/AndroidManifest.xml'
+            res.srcDirs "source/xlargeHighDpi/res", "source/highDpi/res"
+        }
+        fat {
+            // FAT version contains all resorces and is sort of "backup" apk,
+            // if there would be device which would not match with any of
+            // the above variants (like Apple's Universal).
+            // No special AndroidManifest.xml
+            res.srcDirs "source/lowDpi/res", "source/highDpi/res", "source/normalLowDpi/res", "source/normalHighDpi/res", "source/largeLowDpi/res", "source/largeHighDpi/res", "source/xlargeLowDpi/res", "source/xlargeHighDpi/res"
+        }
+    }
+
+    defaultConfig {
+        applicationId "io.qt.example.splitapplication"
+
+        targetSdkVersion 22
+        minSdkVersion 16
+
+        versionCode 0 // It's only a base, calculation is done below
+        versionName "1.0"
+    }
+
+    // Setting these custom vars helps with
+    // calculating version number for each variant
+    productFlavors {
+        normalLowDpi {
+            ext.screenSize = 'normal'
+            ext.density = 'low'
+        }
+        normalHighDpi {
+            ext.screenSize = 'normal'
+            ext.density = 'high'
+        }
+        largeLowDpi {
+            ext.screenSize = 'large'
+            ext.density = 'low'
+        }
+        largeHighDpi {
+            ext.screenSize = 'large'
+            ext.density = 'high'
+        }
+        xlargeLowDpi {
+            ext.screenSize = 'xlarge'
+            ext.density = 'low'
+        }
+        xlargeHighDpi {
+            ext.screenSize = 'xlarge'
+            ext.density = 'high'
+        }
+        fat {
+            ext.screenSize = 'all'
+            ext.density = 'all'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+
+            // Calculate and override versionCode of each variant
+
+            def screenSizeVersionCode = project.ext.screenSizeVersionCodes.get(variant.productFlavors[0].ext.screenSize)
+            def densityVersionCode = project.ext.densityVersionCodes.get(variant.productFlavors[0].ext.density)
+            def abiVersionCode = project.ext.abiVersionCodes.get("armeabi-v7a") // TODO ABI
+            def baseVersionCode = variant.versionCode
+
+            output.versionCodeOverride = 1000*baseVersionCode + 100*abiVersionCode + 10*screenSizeVersionCode + densityVersionCode
+
+            // Name
+
+            def targetName
+            if (variant.buildType.name == "debug" && variant.productFlavors[0].name == "fat") {
+                // Qt Creator expects "default" name for running it
+                // As we disable all variatns but fat in (gradle-)debug
+                // (see below) rename that fat version so fat variant
+                // will be named as there would be no variant at all
+                targetName = output.outputFile.name.replace("fat-", "");
+            } else {
+                // (gradle-)release apk names
+                targetName = output.outputFile.name.replace("android-build-", "application-" + variant.versionName + "-(" + output.versionCodeOverride + ")-armeabi-v7a-"); // TODO ABI
+            }
+            output.outputFile = new File(output.outputFile.parent, targetName);
+        }
+    }
+
+    // In (gradle-)debug skip all variants except
+    // fat in order to speed up the compilation
+    android.variantFilter { variant ->
+        if (variant.buildType.name == "debug" && variant.getFlavors().get(0).name != "fat") {
+            variant.setIgnore(true);
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    // Qt Creator cannot handle signings of more than one apk
+    // Workaround is to do it manually or here - with ENV vars
+    // See https://developer.android.com/studio/publish/app-signing.html#secure-shared-keystore
+    signingConfigs {
+        release {
+            storeFile file("/Path/to/key.keystore")
+            storePassword "KEYSTORE_PASSWORD"
+            keyAlias "ALIAS"
+            keyPassword "KEY_PASSWORD"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support:support-v4:26.0.2' // Needed for Java @Keep annotations for Proguard
+}
